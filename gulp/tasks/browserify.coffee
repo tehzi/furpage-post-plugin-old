@@ -6,8 +6,9 @@ rename =     require 'gulp-rename'
 _ =          require 'underscore'
 
 gulp.task 'browserify', ->
-    dist = paths.temp[_.first(_.filter _.keys(paths.temp), (key) -> !_.contains ['controller'], key)]
-    gulp.src paths.temp.controller, read: no
-        .pipe browserify()
-        .pipe rename path.basename dist
-        .pipe gulp.dest path.dirname dist
+    controllers = _.omit paths.temp, 'mask'
+    _.each paths.temp, (item, key) ->
+        gulp.src key, read: no
+            .pipe browserify()
+            .pipe rename path.basename item
+            .pipe gulp.dest path.dirname item

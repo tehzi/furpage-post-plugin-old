@@ -1,0 +1,22 @@
+name: "Furpage image poster"
+version: "0.0.1"
+description: "Плагин для добавления запросов в очередь"
+manifest_version: 2
+permissions: [
+        "tabs"
+        "activeTab"
+        "http://www.deviantart.com/*"
+        "http://*.deviantart.com/*"
+        "http://www.furaffinity.net/*"
+        "http://amaranth.furries.ru/*"
+        "http://furrycard.net/*"
+    ]
+background:
+    persistent: no
+    scripts: ["background.js"]
+icons:
+    "128": "icon_128.png"
+page_action:
+    default_title: "Furpage image poster"
+    default_icon: "icon_19.png"
+    popup: "popup.html"

@@ -4,5 +4,13 @@ module.exports =
     cjsx:
         'src/coffee/**/*.cjsx': '.temp/js'
     temp:
-        controller: '.temp/js/controller/Main.js'
-        '.temp/js/**/*.js': 'dist/background.js'
+        mask: '.temp/js/**/*.js'
+        '.temp/js/controller/Main.js': 'dist/background.js'
+        '.temp/js/controller/FAController.js': 'dist/fa.js'
+        '.temp/js/controller/DAController.js': 'dist/da.js'
+    manifest:
+        'src/manifest/manifest.coffeeson': 'dist/manifest.json'
+    images:
+        'src/images/**/*.{png,jpe?g,gif}': 'dist'
+    less:
+        'src/less/**/*.less': 'dist/furpage-plugin.css'
