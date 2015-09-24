@@ -29,10 +29,11 @@ class FAController
         imgUrl = $('body').html()
                           .match(/var full_url\s*=\s*"(.+)";/)[1]
         imgUrl = "http:#{imgUrl}"
+        tags = _.map($('.tags-row span.tags a'), (item) => "#" + $(item).text(); ).join(' ')
         uri.addQuery
-            tags: "#фурри"
+            tags: URI.encode "#фурри #{tags}"
             url: window.location
-            caption: document.title
+            caption: URI.encode document.title
             img_url: imgUrl
             user_id: @userId
         $.ajax String(uri.normalize())
@@ -48,6 +49,6 @@ class FAController
             isPublished: !!(r.base > 0)
             inQueue:     !!(r.base is '0' and r.queue > 0)
 
-$ -> new FAController
+# $ -> new FAController
 
 module.exports = FAController

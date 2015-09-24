@@ -6,8 +6,8 @@ module.exports =
     temp:
         mask: '.temp/js/**/*.js'
         '.temp/js/controller/Main.js': 'dist/background.js'
-        '.temp/js/controller/FAController.js': 'dist/fa.js'
-        '.temp/js/controller/DAController.js': 'dist/da.js'
+        '.temp/js/controller/Controller.js': 'dist/bundle.js'
+        # '.temp/js/controller/DAController.js': 'dist/da.js'
     manifest:
         'src/manifest/manifest.coffeeson': 'dist/manifest.json'
     images:
