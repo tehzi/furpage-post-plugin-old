@@ -35,6 +35,7 @@
     "yargs": "^3.25.0"
   },
   "dependencies": {
+    "gulp-livereload": "^3.8.1",
     "gulp-uglifycss": "^1.0.4",
     "gulp-uglifyjs": "^0.6.2",
     "jstransformer-less": "^2.1.0"
