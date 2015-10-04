@@ -6,11 +6,12 @@ module.exports =
     temp:
         mask: '.temp/js/**/*.js'
         '.temp/js/controller/Main.js': 'dist/background.js'
-        '.temp/js/controller/Controller.js': 'dist/bundle.js'
-        # '.temp/js/controller/DAController.js': 'dist/da.js'
+        '.temp/js/init.js': 'dist/bundle.js'
     manifest:
         'src/manifest/manifest.coffeeson': 'dist/manifest.json'
     images:
         'src/images/**/*.{png,jpe?g,gif}': 'dist'
     less:
-        'src/less/**/*.less': 'dist/furpage-plugin.css'
+        'src/less/**/*.less': 'dist/css/furpage-plugin.css'
+    jade:
+        'src/jade/**/*.jade': 'dist'

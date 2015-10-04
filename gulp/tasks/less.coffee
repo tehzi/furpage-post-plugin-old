@@ -4,10 +4,13 @@ rename = require 'gulp-rename'
 path = require 'path'
 paths = require '../paths'
 _ = require 'underscore'
+plumber = require 'gulp-plumber'
 
 gulp.task 'less', ->
-    gulp.src _.first _.keys paths.less
-        .pipe less
-            paths: [path.join(__dirname, 'less', 'includes')]
-        .pipe rename path.basename _.first _.values paths.less
-        .pipe gulp.dest path.dirname _.first _.values paths.less
+    from = _.first(_.keys paths.less)
+    to = _.first(_.values paths.less)
+    gulp.src(from)
+        .pipe(plumber())
+        .pipe(less(paths: [path.join(__dirname, 'less', 'includes')]))
+        .pipe(rename path.basename to)
+        .pipe(gulp.dest path.dirname to)

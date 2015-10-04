@@ -1,14 +1,26 @@
 $ = require 'jquery'
-DAController = require './DAController'
-FAController = require './FAController'
+URI = require 'urijs'
+_ = require 'underscore'
 
 class Controller
-    @isFA: () => new RegExp("htt(p|ps)://www.furaffinity.net/view/\\d+/").test(location.href)
+    $bar: null
+    userId: null
+    lastInfo: null
 
-    @isDA: () => new RegExp("(htt(p|ps)://\\S*\.deviantart\.com/art/\\S*)").test(location.href)
+    @isFA: -> new RegExp("htt(p|ps)://www.furaffinity.net/view/\\d+/").test(location.href)
 
-$ ->
-    new FAController if Controller.isFA()
-    new DAController if Controller.isDA()
+    @isDA: -> new RegExp("(htt(p|ps)://\\S*\.deviantart\.com/art/\\S*)").test(location.href)
+
+    @isPopup: -> !!$('.furpage-plugin__popup').length
+
+    afterAutorize: (userId) =>
+        if !_.isNull(@$bar)
+            @userId = userId
+
+    initialize: =>
+        chrome.runtime.onMessage.addListener (m) =>
+            {userId} = m
+            @afterAutorize(userId) if !_.isUndefined(userId) and !_.isNull(userId)
 
 module.exports = Controller
+
