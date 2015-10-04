@@ -8,7 +8,7 @@ _ =          require 'underscore'
 
 gulp.task 'browserify', ->
     controllers = _.omit(paths.temp, 'mask')
-    _.each paths.temp, (item, key) ->
+    _.map paths.temp, (item, key) ->
         gulp.src(key, read: no)
             .pipe(plumber())
             .pipe(browserify())
