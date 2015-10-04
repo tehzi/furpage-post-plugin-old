@@ -32,9 +32,9 @@ class FAController extends Controller
         imgUrl = "http:#{imgUrl}"
         tags = _.map($('.tags-row span.tags a'), (item) => "#" + $(item).text(); ).join(' ')
         uri.addQuery
-            tags: URI.encode("#фурри #{tags}")
+            tags: "#фурри #{tags}"
             url: window.location
-            caption: URI.encode(document.title)
+            caption: document.title
             img_url: imgUrl
             user_id: @userId
         $.ajax String(uri.normalize())
