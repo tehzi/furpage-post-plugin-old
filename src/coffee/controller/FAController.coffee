@@ -26,7 +26,7 @@ class FAController extends Controller
             .done(@_callback)
 
     onAdd: =>
-        uri = new URI("https://furrycard.net/api.php?method=push")
+        uri = new URI("http://furrycard.net/api.php?method=push")
         imgUrl = $('body').html()
                           .match(/var full_url\s*=\s*"(.+)";/)[1]
         imgUrl = "http:#{imgUrl}"
@@ -39,7 +39,7 @@ class FAController extends Controller
             user_id: @userId
         $.ajax String(uri.normalize())
          .done =>
-            url = "https://furrycard.net/api.php?method=isURL2&url=" + location.href.replace(/full/, 'view')
+            url = "http://furrycard.net/api.php?method=isURL2&url=" + location.href.replace(/full/, 'view')
             $.ajax(url)
              .done(@_callback)
 
