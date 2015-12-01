@@ -21,7 +21,7 @@ class FAController extends Controller
             throw new Error 'Element not found, please rewrite plugin with new $element conteiner.'
 
     onAfterMount: (component) =>
-        url = "https://furrycard.net/api.php?method=isURL2&url=" + location.href.replace /full/, 'view'
+        url = "http://furrycard.net/api.php?method=isURL2&url=" + location.href.replace /full/, 'view'
         $.ajax(url)
             .done(@_callback)
 

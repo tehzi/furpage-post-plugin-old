@@ -23,7 +23,7 @@ class DAController extends Controller
         $.ajax(@url).done(@_callback)
 
     onAdd: =>
-        uri = new URI("https://furrycard.net/api.php?method=push")
+        uri = new URI("http://furrycard.net/api.php?method=push")
         uri.addQuery
             tags: "#фурри #Furry"
             url: window.location.href
