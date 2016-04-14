@@ -7,7 +7,7 @@ Controller = require './Controller'
 
 class DAController extends Controller
     $element: null
-    url: "http://furrycard.net/api.php?method=isURL2&url=" + location.href
+    url: "http://furrycard.furries.ru/api.php?method=isURL2&url=" + location.href
 
     constructor: ->
         @initialize()
@@ -19,11 +19,11 @@ class DAController extends Controller
         @mountBar()
 
     onAfterMount: (component) =>
-        @url = "http://furrycard.net/api.php?method=isURL2&url=" + location.href
+        @url = "http://furrycard.furries.ru/api.php?method=isURL2&url=" + location.href
         $.ajax(@url).done(@_callback)
 
     onAdd: =>
-        uri = new URI("http://furrycard.net/api.php?method=push")
+        uri = new URI("http://furrycard.furries.ru/api.php?method=push")
         uri.addQuery
             tags: "#фурри #Furry"
             url: window.location.href
