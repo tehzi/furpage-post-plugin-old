@@ -9,7 +9,7 @@ class FAController extends Controller
     $bar: null
 
     constructor: ->
-        @$element = $ '#submission_page div.aligncenter.imgshad.p5t'
+        @$element = $('#submission_page div.aligncenter.imgshad')
         @initialize()
 
     initialize: =>
