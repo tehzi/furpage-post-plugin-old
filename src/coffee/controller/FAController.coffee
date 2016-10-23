@@ -9,7 +9,7 @@ class FAController extends Controller
     $bar: null
 
     constructor: ->
-        @$element = $('#submission_page div.aligncenter.imgshad')
+        @$element = $('#columnpage > div.submission-content > div.aligncenter.auto_link.submission-option-bar.submission-area')
         @initialize()
 
     initialize: =>
