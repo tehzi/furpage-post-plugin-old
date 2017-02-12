@@ -4,4 +4,4 @@
 /build
 /.build
 .directory
-plugin.sublime-project
+*.sublime-*
