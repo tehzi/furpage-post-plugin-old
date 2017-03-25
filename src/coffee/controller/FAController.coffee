@@ -27,8 +27,7 @@ class FAController extends Controller
 
     onAdd: =>
         uri = new URI("http://furrycard.furries.ru/api.php?method=push")
-        imgUrl = $('body').html()
-                          .match(/var full_url\s*=\s*"(.+)";/)[1]
+        imgUrl = $('#submissionImg').attr('src')
         imgUrl = "http:#{imgUrl}"
         tags = _.map($('.tags-row span.tags a'), (item) => "#" + $(item).text(); ).join(' ')
         uri.addQuery
