@@ -9,7 +9,7 @@ class FAController extends Controller
     $bar: null
 
     constructor: ->
-        @$element = $('#columnpage .aligncenter.p10.submission-area ')
+        @$element = $('#submissionImg')
         @initialize()
 
     initialize: =>
