@@ -2,7 +2,7 @@ gulp = require 'gulp'
 jade = require 'gulp-jade'
 plumber = require 'gulp-plumber'
 _ = require 'underscore'
-paths = require '../paths'
+paths = require '../options/paths'
 
 gulp.task 'jade', ->
     from = _.first(_.keys paths.jade)

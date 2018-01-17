@@ -2,7 +2,7 @@ gulp = require 'gulp'
 less = require 'gulp-less'
 rename = require 'gulp-rename'
 path = require 'path'
-paths = require '../paths'
+paths = require '../options/paths'
 _ = require 'underscore'
 plumber = require 'gulp-plumber'
 

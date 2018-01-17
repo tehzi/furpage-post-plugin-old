@@ -9,10 +9,11 @@ class PopupController extends Controller
     popup: null
     clientId: 5085818
 
-    constructor: -> @initialize()
+    constructor: ->
+        super()
+        @initialize()
 
     initialize: =>
-        super()
         @popupWrapper = $('.furpage-plugin__popup')
         if @popupWrapper.length
             @popup = Popup.initialize(@popupWrapper.get(0), @onAutorize, @onDelete)

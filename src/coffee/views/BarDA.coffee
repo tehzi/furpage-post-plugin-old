@@ -24,7 +24,7 @@ class BarDA extends React.Component
         barClass = cx
             'furpage__da': yes
         <div className={barClass} >
-            <BarFA {...@props} ref="barFa"></BarFA>
+            <BarFA {...@props} ref="barFa" />
         </div>
 
     @initialize: (parent, afterMount, onAddCallback) ->

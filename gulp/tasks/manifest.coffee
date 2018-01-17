@@ -5,7 +5,7 @@ coffeeson = require 'coffeeson'
 _ =         require 'underscore'
 stream =    require 'stream'
 path =      require 'path'
-paths  =    require '../paths'
+paths  =    require '../options/paths'
 
 gulp.task 'manifest', ->
     file = _.first(_.keys paths.manifest)

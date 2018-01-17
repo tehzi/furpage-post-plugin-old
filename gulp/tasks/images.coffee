@@ -1,5 +1,5 @@
 gulp  = require 'gulp'
-paths = require '../paths'
+paths = require '../options/paths'
 _ =     require 'underscore'
 
 gulp.task 'images', ->
