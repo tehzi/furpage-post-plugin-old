@@ -9,11 +9,11 @@ class FAController extends Controller
     $bar: null
 
     constructor: ->
+        super()
         @$element = $('#submissionImg')
         @initialize()
 
     initialize: =>
-        super()
         if @$element.length
             @$element.after '<div id="plugin-element"></div>'
             @$bar = BarFA.initialize($('#plugin-element').get(0), @onAfterMount, @onAdd, @onAutorize)

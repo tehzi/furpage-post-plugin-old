@@ -10,10 +10,10 @@ class DAController extends Controller
     url: "http://furrycard.furries.ru/api.php?method=isURL2&url=" + location.href
 
     constructor: ->
+        super()
         @initialize()
 
     initialize: =>
-        super()
         @$element = $('.dev-view-deviation:last')
         @unmountLastBar()
         @mountBar()
