@@ -1,8 +1,10 @@
 "use strict";
 
-import "babel-register";
 import _ from "underscore";
 import gulp  from "gulp";
+import gulpIf from "gulp-if";
+import uglify from "gulp-uglify";
+import replaceTask from "gulp-replace-task";
 import path from "path";
 import source from "vinyl-source-stream";
 import browserify from "browserify";
@@ -61,10 +63,24 @@ function task() {
                 path.basename = "background";
             }
         }))
+        .pipe(gulpIf(
+            !option.developMode,
+            replaceTask({
+                prefix: '',
+                patterns: [{
+                    match: '"production" === process.env.NODE_ENV',
+                    replacement: 'true',
+                }]
+            })
+        ))
+        .pipe(gulpIf(!option.developMode, uglify().on('error', function(err) {
+            log(err.toString());
+            this.emit('end');
+        })))
         .pipe(gulp.dest(buildDir)));
 
     return eventStream.merge.apply(null, tasks);
 }
 
 gulp.task("coffeeiry", ["clean"], task);
-gulp.task("coffeeiry:watch", ["clean"], task);
+gulp.task("coffeeiry:watch", task);
