@@ -1,6 +1,6 @@
 {
   "name": "furpage-plugin",
-  "version": "0.0.11",
+  "version": "0.1.0",
   "description": "Плагин для репоста с фа и да для фуррипейдж",
   "main": "index.js",
   "repository": "https://bitbucket.org/furdev/furpage-post-plugin.git",
