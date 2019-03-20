@@ -18,21 +18,30 @@ import {
     initFiles
 } from "../options/paths";
 import eventStream from "event-stream";
+// import sourcemaps from "gulp-sourcemaps";
 
 const cache = {};
 
 function bundler(file, debug = false, coffeeifyMode = true, watchifyMode = true) {
     const bundler = browserify(file, {
         extensions: [coffeeifyMode ? '.coffee' : '.js'],
-        debug,
+        // sourceMaps: debug,
+        // debug,
         cache
     });
     if(coffeeifyMode) {
         bundler.transform("coffeeify", {
+            // sourceMap: "js",
+            // sourceMap: debug,
             transpile: {
                 "presets": ["env"],
                 "plugins": ["transform-react-jsx"]
             },
+        })
+        .transform("babelify",  {
+            sourceMapsAbsolute: true,
+            "presets": ["env"],
+            "plugins": ["transform-react-jsx"]
         });
     }
     if(watchifyMode) {
@@ -47,11 +56,12 @@ function bundler(file, debug = false, coffeeifyMode = true, watchifyMode = true)
 function task() {
     const tasks = _(initFiles).map(file =>
         bundler(file, option.developMode, true, option.watchMode)
+        .pipe(source(path.basename(file)))
         .on('error', function(err) {
             console.error(err.toString());
             this.emit("end");
         })
-        .pipe(source(path.basename(file)))
+
         .pipe(buffer())
         .pipe(rename(path => {
             path.dirname = ".";
