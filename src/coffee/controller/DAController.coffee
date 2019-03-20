@@ -14,6 +14,7 @@ class DAController extends Controller
         @initialize()
 
     initialize: =>
+        super()
         @$element = $('.dev-view-deviation:last')
         @unmountLastBar()
         @mountBar()

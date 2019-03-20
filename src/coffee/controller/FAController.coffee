@@ -14,6 +14,7 @@ class FAController extends Controller
         @initialize()
 
     initialize: =>
+        super()
         if @$element.length
             @$element.after '<div id="plugin-element"></div>'
             @$bar = BarFA.initialize($('#plugin-element').get(0), @onAfterMount, @onAdd, @onAutorize)
@@ -21,15 +22,15 @@ class FAController extends Controller
             throw new Error 'Element not found, please rewrite plugin with new $element conteiner.'
 
     onAfterMount: (component) =>
-        url = "http://furrycard.furries.ru/api.php?method=isURL2&url=" + location.href.replace /full/, 'view'
+        url = "https://furrycard.furries.ru/api.php?method=isURL2&url=" + location.href.replace /full/, 'view'
         $.ajax(url)
             .done(@_callback)
 
     onAdd: =>
-        uri = new URI("http://furrycard.furries.ru/api.php?method=push")
+        uri = new URI("https://furrycard.furries.ru/api.php?method=push")
         imgUrl = $('#submissionImg').attr('src')
         imgUrl = "http:#{imgUrl}"
-        tags = _.map($('.tags-row span.tags a'), (item) => "#" + $(item).text(); ).join(' ')
+        tags = _.map($('.tags-row span.tags a'), (item) => "#" + $(item).text() ).join(' ')
         uri.addQuery
             tags: "#фурри #{tags}"
             url: window.location
@@ -38,8 +39,8 @@ class FAController extends Controller
             user_id: @userId
         $.ajax String(uri.normalize())
          .done =>
-            url = "http://furrycard.furries.ru/api.php?method=isURL2&url=" + location.href.replace(/full/, 'view')
-            $.ajax(url)
+            url = "https://furrycard.furries.ru/api.php?method=isURL2&url=" + location.href.replace(/full/, 'view')
+            $.ajax(url, jsonp: yes)
              .done(@_callback)
 
     onAutorize: => @autorize()

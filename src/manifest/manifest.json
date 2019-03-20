@@ -11,7 +11,7 @@
         "*://www.furaffinity.net/*"
       ],
       "css": [
-        "css/furpage-plugin.css"
+        "furpage-plugin.css"
       ],
       "js": [
         "bundle.js"
