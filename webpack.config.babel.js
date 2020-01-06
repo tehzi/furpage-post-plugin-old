@@ -1,12 +1,15 @@
 import CopyWebpackPlugin from "copy-webpack-plugin";
-import CleanPlugin from "clean-webpack-plugin";
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import HappyPack from "happypack";
 import { compact } from "lodash/array";
 import FileManager from "filemanager-webpack-plugin";
 import HtmlPlugin from "html-webpack-plugin";
+import Dotenv from "dotenv-webpack";
+import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
 import packageJson from "./package.json";
 
-const isDev = mode => mode === "development";
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const isDevelopment = mode => mode === "development";
 
 const config = {
     path: `${__dirname}/dist`,
@@ -27,26 +30,27 @@ const config = {
     },
 };
 
-export default (env, { mode }) => ({
-    devtool: isDev(mode) && "inline-source-map",
+export default (environment, { mode }) => ({
+    devtool: isDevelopment(mode) && "inline-source-map",
     optimization: {
         namedModules: true, // NamedModulesPlugin()
         noEmitOnErrors: true, // NoEmitOnErrorsPlugin
     },
     entry: {
-        "furpage-bundle": "./src/js/pages/bundle.jsx",
-        background: "./src/js/pages/background.jsx",
-        popup: "./src/js/pages/popup.jsx",
+        "furpage-bundle": "./src/js/pages/bundle.tsx",
+        background: "./src/js/pages/background.tsx",
+        popup: "./src/js/pages/popup.tsx",
     },
     resolve: {
-        extensions: [".js", ".json", ".jsx"],
+        extensions: [".js", ".json", ".jsx", ".ts", ".tsx"],
+        plugins: [new TsconfigPathsPlugin()],
     },
     module: {
         rules: [
             {
-                test: /\.jsx?/,
+                test: /\.[jt]sx?/,
                 exclude: /node_modules/,
-                loader: "happypack/loader?id=js",
+                loader: "happypack/loader?id=ts",
             },
             {
                 test: /.*\.(ttf|eot|svg|css|woff|woff2|png|ico|jpg|jpeg|gif)$/i,
@@ -64,45 +68,55 @@ export default (env, { mode }) => ({
         ],
     },
     plugins: compact([
-        new CleanPlugin(config.path, config.clean),
+        new CleanWebpackPlugin({}),
+        new Dotenv({
+            path: `./.env.${isDevelopment ? "local" : "prod"}`,
+            safe: true,
+        }),
         new CopyWebpackPlugin([
             {
                 from: "./src/json/**/*",
                 to: "./",
                 flatten: true,
+                // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
                 transform(content, path) {
                     if (path.match(/manifest\.json$/)) {
-                        return content.toString().replace("%%VERSION%%", packageJson.version);
+                        return content
+                            .toString()
+                            .replace("%%VERSION%%", packageJson.version);
                     }
                     return content;
                 },
             },
         ]),
         new HappyPack({
-            id: "js",
+            id: "ts",
             threads: 4,
             loaders: compact([
                 {
                     path: "babel-loader",
                     exclude: [/node_modules/],
                 },
-                !isDev(mode) && "eslint-loader",
+                !isDevelopment(mode) && "eslint-loader",
             ]),
         }),
         new HtmlPlugin(config.html),
         new HtmlPlugin(config.popup),
-        !isDev(mode) && new FileManager({
-            onEnd: [
-                {
-                    mkdir: ["./release"],
-                },
-                {
-                    archive: [{
-                        source: config.path,
-                        destination: `${__dirname}/release/${packageJson.name}-${packageJson.version}.zip`,
-                    }],
-                },
-            ],
-        }),
+        !isDevelopment(mode) &&
+            new FileManager({
+                onEnd: [
+                    {
+                        mkdir: ["./release"],
+                    },
+                    {
+                        archive: [
+                            {
+                                source: config.path,
+                                destination: `${__dirname}/release/${packageJson.name}-${packageJson.version}.zip`,
+                            },
+                        ],
+                    },
+                ],
+            }),
     ]),
 });

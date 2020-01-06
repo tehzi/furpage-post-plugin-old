@@ -3,3 +3,5 @@
 /dist
 config.json
 release
+config-dev.json
+.env.*
