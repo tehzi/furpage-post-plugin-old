@@ -7,7 +7,7 @@ interface Status {
 export default async function getStatus(
     accessToken: string = null,
     url = window.location.href,
-): Promise<Status> {
+): Promise<Status | never> {
     if (!accessToken) {
         throw new Error("No access token");
     }

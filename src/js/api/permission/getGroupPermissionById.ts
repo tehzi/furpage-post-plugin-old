@@ -9,7 +9,7 @@ export default async function getGroupPermissionById(
     accessToken: string,
     fields = ["admin_level"],
     v = "5.52",
-): Promise<GroupPermission | string> {
+): Promise<GroupPermission | string | never> {
     if (groupId) {
         const urlSearch = new URLSearchParams({
             group_id: groupId,

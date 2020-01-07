@@ -6,7 +6,7 @@ import { SagaIterator } from "redux-saga";
 // import { setLoading } from "../../actions/login";
 
 export const MAX_TAGS = 5;
-
+// TODO WIP
 // function* addImage({
 //     payload: {
 //         image,

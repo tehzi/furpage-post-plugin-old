@@ -7,7 +7,7 @@ const { API_CLIENT_SECRET } = process.env;
 
 export default async function refreshApiPermission(
     refreshToken: string = null,
-): Promise<Permission | ApiError> {
+): Promise<Permission | ApiError | never> {
     if (!refreshToken && typeof refreshToken !== "string") {
         throw new Error("No refresh token");
     }
@@ -24,7 +24,8 @@ export default async function refreshApiPermission(
         }),
     });
     if (tokenResponse.ok) {
-        return await tokenResponse.json();
+        const token = await tokenResponse.json();
+        return token;
     }
     throw new Error("Bad response");
 }

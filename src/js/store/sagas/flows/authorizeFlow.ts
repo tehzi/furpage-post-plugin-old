@@ -4,7 +4,7 @@ import refreshApiPermission from "~api/permission/refreshApiPermission";
 
 export default function* authorizeFlow<
     T extends (...args: unknown[]) => unknown
->(generatorFlow: T, ...parameters: Parameters<T>): SagaIterator /* | never */ {
+>(generatorFlow: T, ...parameters: Parameters<T>): SagaIterator {
     let result: ReturnType<T>;
     let apiTries = 0;
 
@@ -33,8 +33,10 @@ export default function* authorizeFlow<
                                 access_token: apiAccessToken,
                                 refresh_token: apiRefreshToken,
                             } = yield call(refreshApiPermission, refreshToken);
+                            // TODO WIP
                             console.log(apiAccessToken, apiRefreshToken);
                         } catch (error) {
+                            // TODO WIP
                             console.log(error);
                         }
 

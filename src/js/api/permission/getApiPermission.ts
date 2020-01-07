@@ -14,7 +14,7 @@ export interface Permission {
 
 export default async function getApiPermission(
     accessToken: string = null,
-): Promise<Permission | ApiError> {
+): Promise<Permission | ApiError | never> {
     if (!accessToken && typeof accessToken !== "string") {
         throw new Error("No access token");
     }

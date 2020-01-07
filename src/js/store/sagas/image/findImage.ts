@@ -27,6 +27,7 @@ function* tabComplete({
         try {
             yield put(addImageLinkToStore(url));
         } catch {}
+        // TODO WIP
         // function getBase64Image(img) {
         //     // Create an empty canvas element
         //     var canvas = document.createElement("canvas");
@@ -60,6 +61,7 @@ function* updateImageStatus({
             try {
                 yield put(setLoading(true));
                 console.log(yield call(authorizeFlow, getStatus, url));
+                // TODO WIP
                 // const { base = "0", queue = "0" } = yield call(getStatus, url);
                 // yield put(setLoading(false));
                 // if (queue > 0) {
