@@ -1,8 +1,9 @@
 /node_modules
-/.temp
+/.idea
 /dist
-/build
-/.build
+config.json
+release
+config-dev.json
+.env.*
 .directory
-*.sublime-*
-.idea
+*.iml
