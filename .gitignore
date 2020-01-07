@@ -5,3 +5,5 @@ config.json
 release
 config-dev.json
 .env.*
+.directory
+*.iml

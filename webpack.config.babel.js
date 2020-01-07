@@ -30,6 +30,7 @@ const config = {
     },
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default (environment, { mode }) => ({
     devtool: isDevelopment(mode) && "inline-source-map",
     optimization: {

@@ -9,7 +9,8 @@
         "build-dev": "webpack --mode development --watch"
     },
     "keywords": [
-        "furry",
+        "social networks",
+        "image",
         "art"
     ],
     "author": "zi.white",

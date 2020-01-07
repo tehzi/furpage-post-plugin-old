@@ -26,6 +26,7 @@ module.exports = {
         },
         "import/resolver": {
             typescript: {},
+            // alternative node resolver
             // node: {
             //     extensions: [".ts", ".tsx", ".js", ".jsx"],
             // },
