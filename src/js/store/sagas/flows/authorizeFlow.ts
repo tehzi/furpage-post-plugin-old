@@ -1,6 +1,7 @@
-import { call, select } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import refreshApiPermission from "~api/permission/refreshApiPermission";
+import { refreshApiAuth } from "~actions/login";
 
 export default function* authorizeFlow<
     T extends (...args: unknown[]) => unknown
@@ -9,17 +10,13 @@ export default function* authorizeFlow<
     let apiTries = 0;
 
     try {
-        const {
-            apiAccessToken: accessToken,
-            apiRefreshToken: refreshToken,
-        } = yield select(({ login: { auth } }) => ({
-            auth,
-        }));
-
         // noinspection LoopStatementThatDoesntLoopJS
+
         while (true) {
             try {
-                console.log(generatorFlow, accessToken, ...parameters);
+                const { apiAccessToken: accessToken } = yield select(
+                    ({ login: { auth } }) => auth,
+                );
                 result = yield call(
                     generatorFlow as (...args: unknown[]) => unknown,
                     accessToken,
@@ -30,15 +27,20 @@ export default function* authorizeFlow<
                     case 0:
                         try {
                             const {
+                                apiRefreshToken: refreshToken,
+                            } = yield select(({ login: { auth } }) => auth);
+                            // Try to get a new access token by refresh Token
+                            const {
                                 access_token: apiAccessToken,
                                 refresh_token: apiRefreshToken,
                             } = yield call(refreshApiPermission, refreshToken);
-                            // TODO WIP
-                            console.log(apiAccessToken, apiRefreshToken);
-                        } catch (error) {
-                            // TODO WIP
-                            console.log(error);
-                        }
+                            yield put(
+                                refreshApiAuth({
+                                    apiAccessToken,
+                                    apiRefreshToken,
+                                }),
+                            );
+                        } catch {}
 
                         apiTries++;
                         break;

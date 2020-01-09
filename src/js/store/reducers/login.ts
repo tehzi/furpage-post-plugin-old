@@ -10,14 +10,14 @@ import {
 import { Payload } from "~types/actions";
 
 export interface LoginReducer {
-    auth: Auth;
+    auth: Auth | {};
     hasPermission: boolean;
     checkFailed: boolean;
     loading: boolean;
 }
 
 const DEFAULT_STATE: LoginReducer = {
-    auth: null,
+    auth: {},
     hasPermission: false,
     checkFailed: null,
     loading: false,
@@ -38,7 +38,7 @@ export default function login(
     if (action.type === DELETED_AUTH) {
         return {
             ...state,
-            auth: null,
+            auth: {},
         };
     }
 
