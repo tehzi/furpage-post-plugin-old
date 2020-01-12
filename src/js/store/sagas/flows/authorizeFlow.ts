@@ -12,16 +12,17 @@ export default function* authorizeFlow<
     try {
         // noinspection LoopStatementThatDoesntLoopJS
 
+        let { apiAccessToken: accessToken } = yield select(
+            ({ login: { auth } }) => auth,
+        );
         while (true) {
             try {
-                const { apiAccessToken: accessToken } = yield select(
-                    ({ login: { auth } }) => auth,
-                );
                 result = yield call(
                     generatorFlow as (...args: unknown[]) => unknown,
                     accessToken,
                     ...parameters,
                 );
+                break;
             } catch {
                 switch (apiTries) {
                     case 0:
@@ -34,6 +35,7 @@ export default function* authorizeFlow<
                                 access_token: apiAccessToken,
                                 refresh_token: apiRefreshToken,
                             } = yield call(refreshApiPermission, refreshToken);
+                            accessToken = apiAccessToken;
                             yield put(
                                 refreshApiAuth({
                                     apiAccessToken,
@@ -41,16 +43,16 @@ export default function* authorizeFlow<
                                 }),
                             );
                         } catch {}
-
-                        apiTries++;
                         break;
                     case 1:
                         break;
                     default:
-                        apiTries++;
                 }
             }
-            break;
+            apiTries++;
+            if (apiTries > 1) {
+                break;
+            }
         }
     } catch {}
 

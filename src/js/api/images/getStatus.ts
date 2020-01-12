@@ -1,11 +1,13 @@
+import { Auth } from "~actions/login";
+
 const { API_URL } = process.env;
 
 interface Status {
-    url: string;
+    isExistInBD: boolean;
 }
 
 export default async function getStatus(
-    accessToken: string = null,
+    accessToken: Auth["accessToken"] = null,
     url = window.location.href,
 ): Promise<Status | never> {
     if (!accessToken) {
