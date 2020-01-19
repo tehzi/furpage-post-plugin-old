@@ -81,16 +81,21 @@ const mapDispatchToProperties: MapDispatchToProps<
     },
 });
 
+export type SiteComponent = ComponentType<
+    Partial<SiteProps & { mount: Element }>
+>;
+
 export default function withSite(
     condition: string,
-    selector: string,
+    containerSelector: string,
+    imageSelector: string,
     tagSelector: string = null,
 ): InferableComponentEnhancerWithProps<SiteProps, OwnSiteProps> {
     return compose(
         connect(mapStateToProperties, mapDispatchToProperties),
-        (Site: ComponentType<SiteProps & { mount: Element }>) =>
+        (Site: SiteComponent) =>
             class extends Component<SiteProps> {
-                image: HTMLImageElement = document.querySelector(selector);
+                image: HTMLImageElement = document.querySelector(imageSelector);
 
                 static displayName = `withSite(${
                     (Component as ComponentClass).displayName
@@ -115,7 +120,7 @@ export default function withSite(
                     if (isUpdate) {
                         this.image = last([
                             ...((document.querySelectorAll(
-                                selector,
+                                imageSelector,
                             ) as unknown) as Iterable<HTMLImageElement>),
                         ]);
                         const isElementAppended = isElement(

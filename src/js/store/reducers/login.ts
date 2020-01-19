@@ -10,14 +10,14 @@ import {
 import { Payload } from "~types/actions";
 
 export interface LoginReducer {
-    auth: Auth | {};
+    auth: Partial<Auth>;
     hasPermission: boolean;
     checkFailed: boolean;
     loading: boolean;
 }
 
 const DEFAULT_STATE: LoginReducer = {
-    auth: {},
+    auth: { userId: null },
     hasPermission: false,
     checkFailed: null,
     loading: false,
