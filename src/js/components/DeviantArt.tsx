@@ -17,6 +17,6 @@ const DeviantArt: FC<DeviantArtProps> = ({ mount, children }) =>
     createPortal(<>{children}</>, mount);
 
 export default compose(
-    withSite(findDa(), null, imgSelector),
+    withSite(findDa(), containerSelector, imgSelector),
     memo,
 )(DeviantArt) as SiteComponent;
