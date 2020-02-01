@@ -11,12 +11,16 @@ import { findImageUrl } from "~helpers/mode";
 import {
     ADD_IMAGE_LINK_TO_STORE,
     addImageLinkToStore,
+    resetImage,
+    setAdded,
+    setInQueue,
     UPDATE_IMAGE,
     updateImage,
 } from "~actions/images";
 import getStatus from "~api/images/getStatus";
 import authorizeFlow from "../flows/authorizeFlow";
 import { ActionWithPayload } from "~types/actions";
+import checkOutImageInQueue from "~api/images/queue/checkOutImageInQueue";
 
 function* tabComplete({
     payload: {
@@ -28,24 +32,7 @@ function* tabComplete({
             yield put(addImageLinkToStore(url));
         } catch {}
         // TODO WIP
-        // function getBase64Image(img) {
-        //     // Create an empty canvas element
-        //     var canvas = document.createElement("canvas");
-        //     canvas.width = img.width;
-        //     canvas.height = img.height;
-        //
-        //     // Copy the image contents to the canvas
-        //     var ctx = canvas.getContext("2d");
-        //     ctx.drawImage(img, 0, 0);
-        //
-        //     // Get the data-URL formatted image
-        //     // Firefox supports PNG and JPEG. You could check img.src to
-        //     // guess the original format, but be aware the using "image/jpg"
-        //     // will re-encode the image.
-        //     var dataURL = canvas.toDataURL("image/png");
-        //
-        //     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-        // }
+
     }
 }
 
@@ -60,19 +47,27 @@ function* updateImageStatus({
         if (hasPermission && isImageResource) {
             try {
                 yield put(setLoading(true));
-                console.log(yield call(authorizeFlow, getStatus, url));
-                // TODO WIP
-                // const { base = "0", queue = "0" } = yield call(getStatus, url);
-                // yield put(setLoading(false));
-                // if (queue > 0) {
-                //     yield put(setInQueue(url));
-                // }
-                // if (base > 0) {
-                //     yield put(setAdded(url));
-                // }
-                // if ([base, queue].every(item => item === "0")) {
-                //     yield put(resetImage(url));
-                // }
+                const { isExistInBD } = yield call(
+                    authorizeFlow,
+                    getStatus,
+                    url,
+                );
+                if (!isExistInBD) {
+                    const { isExistInQueue } = yield call(
+                        authorizeFlow,
+                        checkOutImageInQueue,
+                        url,
+                    );
+
+                    if (isExistInQueue) {
+                        yield put(setInQueue(url));
+                    } else {
+                        yield put(resetImage(url));
+                    }
+                    yield put(setLoading(false));
+                } else {
+                    yield put(setAdded(url));
+                }
             } catch (error) {
                 yield put(chromeError(error));
             }

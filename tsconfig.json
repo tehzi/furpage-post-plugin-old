@@ -34,9 +34,6 @@
             "~images/*": ["src/images/*"]
         }
     },
-    "include": [
-        "**/*"
-    ],
     "exclude": [
         "node_modules"
     ]

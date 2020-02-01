@@ -12,10 +12,15 @@ export default function configureStore(
     reducer: Reducer<AppStore>,
 ): Store<AppStore> {
     const composeEnhancers = isDevelopment
-        ? composeWithDevTools({ realtime: true })
+        ? composeWithDevTools({
+              realtime: true,
+              port: 8000,
+              hostname: "127.0.0.1",
+          })
         : compose;
-    const store = composeEnhancers(applyMiddleware(...middleware))(createStore)(
+    const store = createStore(
         reducer,
+        composeEnhancers(applyMiddleware(...middleware)),
     );
     wrapStore(store, { portName: "FUR_PAGE" });
 

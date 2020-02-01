@@ -7,6 +7,8 @@ import {
     DELETE_AUTH,
     deletedAuth,
     FIND_STORED_AUTH,
+    REFRESH_AUTH,
+    RefreshApi,
     unauthorized,
 } from "~actions/login";
 import { authError, authRead, authSaved } from "~actions/store";
@@ -83,6 +85,23 @@ function* saveAuth({
     }
 }
 
+function* refreshAuth({
+    payload: { apiRefreshToken, apiAccessToken },
+}: ActionWithPayload<RefreshApi>): SagaIterator {
+    try {
+        const readChannel = yield call(getChannel);
+        const { accessToken = false, userId = false } = yield take(readChannel);
+        yield put(
+            auth({
+                accessToken,
+                userId,
+                apiAccessToken,
+                apiRefreshToken,
+            }),
+        );
+    } catch {}
+}
+
 function* putAuthToRedux(): SagaIterator {
     try {
         const readChannel = yield call(getChannel);
@@ -117,6 +136,7 @@ function* deleteAuthSaga(): SagaIterator {
 
 export default function* store(): SagaIterator {
     yield takeEvery(AUTH, saveAuth);
+    yield takeEvery(REFRESH_AUTH, refreshAuth);
     yield takeEvery(FIND_STORED_AUTH, putAuthToRedux);
     yield takeEvery(DELETE_AUTH, deleteAuthSaga);
 }

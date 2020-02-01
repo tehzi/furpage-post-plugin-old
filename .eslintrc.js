@@ -65,6 +65,7 @@ module.exports = {
         }],
         "react/prop-types": "off",
         "no-empty": "off",
+        "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/no-explicit-any": "error",
         "@typescript-eslint/explicit-function-return-type": "error",
         "no-plusplus": "off",

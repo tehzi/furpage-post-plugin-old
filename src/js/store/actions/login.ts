@@ -13,6 +13,14 @@ export const auth: CallableAction<Auth> = payload => ({
     payload,
 });
 
+export type RefreshApi = Pick<Auth, "apiRefreshToken" | "apiAccessToken">;
+
+export const REFRESH_AUTH = "REFRESH_AUTH";
+export const refreshApiAuth: CallableAction<RefreshApi> = payload => ({
+    type: REFRESH_AUTH,
+    payload,
+});
+
 export const DELETE_AUTH = "DELETE_AUTH";
 export const deleteAuth: CallableAction = () => ({ type: DELETE_AUTH });
 
