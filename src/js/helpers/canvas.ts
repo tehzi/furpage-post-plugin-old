@@ -9,6 +9,7 @@ const createImage = (img: HTMLImageElement): string => {
     // return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
 };
 
+// TODO WIP
 // function getBase64Image(img) {
 //     // Create an empty canvas element
 //     var canvas = document.createElement("canvas");
