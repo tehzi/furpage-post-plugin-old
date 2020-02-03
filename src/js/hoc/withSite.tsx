@@ -81,19 +81,19 @@ const mapDispatchToProperties: MapDispatchToProps<
     },
 });
 
-export type SiteComponent = ComponentType<
+export type WebsiteComponent = ComponentType<
     Partial<SiteProps & { mount: Element }>
 >;
 
 export default function withSite(
     condition: string,
-    containerSelector: string,
+    containerSelector: () => void | string,
     imageSelector: string,
     tagSelector: string = null,
 ): InferableComponentEnhancerWithProps<SiteProps, OwnSiteProps> {
     return compose(
         connect(mapStateToProperties, mapDispatchToProperties),
-        (Site: SiteComponent) =>
+        (Website: WebsiteComponent) =>
             class extends Component<SiteProps> {
                 image: HTMLImageElement = document.querySelector(imageSelector);
 
@@ -166,7 +166,7 @@ export default function withSite(
                     } = this.props;
 
                     return (
-                        <Site
+                        <Website
                             image={image}
                             loginIn={loginIn}
                             mount={document.querySelector(`#${pluginMount}`)}
@@ -193,7 +193,7 @@ export default function withSite(
                             >
                                 <ButtonState />
                             </Button>
-                        </Site>
+                        </Website>
                     );
                 }
             },

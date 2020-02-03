@@ -1,7 +1,7 @@
 import React, { FC, memo } from "react";
 import { createPortal } from "react-dom";
 import { compose } from "redux";
-import withSite, { SiteComponent } from "~hoc/withSite";
+import withSite, { WebsiteComponent } from "~hoc/withSite";
 import { findFa } from "~helpers/mode";
 
 export const imgSelector = "#submissionImg";
@@ -17,4 +17,4 @@ const FurAffinity: FC<FurAffinityProps> = ({ mount, children }) =>
 export default compose(
     withSite(findFa(), null, imgSelector, tagSelector),
     memo,
-)(FurAffinity) as SiteComponent;
+)(FurAffinity) as WebsiteComponent;

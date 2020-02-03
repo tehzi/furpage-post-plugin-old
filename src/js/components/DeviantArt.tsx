@@ -1,7 +1,7 @@
-import React, { memo, FC} from "react";
+import React, { memo, FC } from "react";
 import { createPortal } from "react-dom";
 import { compose } from "redux";
-import withSite, { SiteComponent } from "~hoc/withSite";
+import withSite, { WebsiteComponent } from "~hoc/withSite";
 import { findDa } from "~helpers/mode";
 
 export const imgSelector =
@@ -19,4 +19,4 @@ const DeviantArt: FC<DeviantArtProps> = ({ mount, children }) =>
 export default compose(
     withSite(findDa(), containerSelector, imgSelector),
     memo,
-)(DeviantArt) as SiteComponent;
+)(DeviantArt) as WebsiteComponent;
